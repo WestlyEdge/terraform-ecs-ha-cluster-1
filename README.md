@@ -17,14 +17,14 @@ Applying main.tf will create a self contained, highly available, production-read
 
 ## How to create it?
 
-To create a working ECS cluster from this repository see **main.tf** and **main.tfvars**.
+To create a working ECS cluster from this repository see **ecs.tf** and **ecs.tfvars**.
 
 using the default terraform flow:
 
 ```bash
 terraform get
-terraform plan -input=false -var-file=main.tfvars
-terraform apply -input=false -var-file=main.tfvars
+terraform plan -input=false -var-file=ecs.tfvars
+terraform apply -input=false -var-file=ecs.tfvars
 ```
 
 
