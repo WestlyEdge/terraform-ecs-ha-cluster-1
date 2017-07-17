@@ -1,2 +1,2 @@
-export AWS_ACCESS_KEY_ID=[to use direnv copy this file to create a new file named .envrc and insert proper value here]
-export AWS_SECRET_ACCESS_KEY=[to use direnv copy this file to create a new file named .envrc and insert proper value here]
+export AWS_ACCESS_KEY_ID=[to use direnv, copy this file to create a new file named .envrc and insert proper value here]
+export AWS_SECRET_ACCESS_KEY=[to use direnv, copy this file to create a new file named .envrc and insert proper value here]
