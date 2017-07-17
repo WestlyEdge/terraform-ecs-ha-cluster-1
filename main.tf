@@ -15,14 +15,14 @@ module "ecs" {
   max_size             = "${var.max_size}"
   min_size             = "${var.min_size}"
   desired_capacity     = "${var.desired_capacity}"
-  key_name             = "${aws_key_pair.ecs.key_name}"
+  key_name             = "${aws_key_pair.ecs-kp.key_name}"
   instance_type        = "${var.instance_type}"
   ecs_aws_ami          = "${var.ecs_aws_ami}"
 }
 
-resource "aws_key_pair" "ecs" {
-  key_name   = "ecs-key-${var.environment}"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtMljjj0Ccxux5Mssqraa/iHHxheW+m0Rh17fbd8t365y9EwBn00DN/0PjdU2CK6bjxwy8BNGXWoUXiSDDtGqRupH6e9J012yE5kxhpXnnkIcLGjkAiflDBVV4sXS4b3a2LSXL5Dyb93N2GdnJ03FJM4qDJ8lfDQxb38eYHytZkmxW14xLoyW5Hbyr3SXhdHC2/ecdp5nLNRwRWiW6g9OA6jTQ3LgeOZoM6dK4ltJUQOakKjiHsE+jvmO0hJYQN7+5gYOw0HHsM+zmATvSipAWzoWBWcmBxAbcdW0R0KvCwjylCyRVbRMRbSZ/c4idZbFLZXRb7ZJkqNJuy99+ld41 ecs@aws.fake"
+resource "aws_key_pair" "ecs-kp" {
+  key_name   = "${var.environment}-ecs-ha-cluster-1-kp"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyezSWhgmnG+FOqORDJUBOG5s9c1farcXK1+Mi5oUwqjd+ysw8YyVozmN0CZaI7dwUiWQRDRYfwFSjcXDsXVyQuEo34IWCmxVeiT/5gQPQTdeoP2umK0T+CSyPQ3SfipAgsGchYTeKf3yKijIw5lQldBALDiZQhJkRPBSPMf5dcLnc0vTUPEYoWjEWDS6Muq4eZqRK5KOSM7QI1WF/PtlGTVeukG6z3nFQ/PTbHz/hI7C3peAsa4OM1z7U9dywV9M3QwXUvj3Ff1qSwmNB9nfzLWjHMXJ22oj7XFVFl/L6QLl7yszNEinY2DfdarZF8bqfTJyTu5grm38IuzCjworr wesedge@Wess-MacBook-Pro-4.local"
 }
 
 variable "vpc_cidr" {}
