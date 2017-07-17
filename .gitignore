@@ -1,0 +1,8 @@
+aws.tf
+.terraform
+terraform.tfstate*
+*.DS_Store
+.idea/
+.envrc
+.git/
+.vagrant/
