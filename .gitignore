@@ -3,6 +3,5 @@ aws.tf
 terraform.tfstate*
 *.DS_Store
 .idea/
-.envrc
 .git/
-.vagrant/
+.envrc
