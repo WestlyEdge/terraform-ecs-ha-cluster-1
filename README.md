@@ -4,7 +4,7 @@ Applying main.tf will create a self contained, highly available, production-read
 
 ![ECS infra](img/ecs-infra.png)
 
-##What are we creating?
+## What are we creating?
 
 * VPC with a /16 ip address range and an internet gateway
 * We are choosing a region and a number of availability zones we want to use. For high-availability we need at least two
