@@ -1,6 +1,6 @@
 # terraform-ecs-ha-cluster-1
 
-Applying main.tf will create a self contained, highly available, production-ready ECS host cluster.
+Applying ecs.tf will create a self contained, highly available, production-ready ECS host cluster.
 
 ![ECS infra](img/ecs-infra.png)
 
