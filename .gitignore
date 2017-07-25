@@ -1,6 +1,6 @@
 aws.tf
-.terraform
-terraform.tfstate*
+.terraform*
+*/terraform.tfstate*
 *.DS_Store
 .idea/
 .git/

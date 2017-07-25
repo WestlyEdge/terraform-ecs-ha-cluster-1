@@ -1,0 +1,7 @@
+- remote state
+- cloudwatch/docker logging?
+- cloudwatch monitoring?
+- alb vs elb
+- nik's docker terraform apply command?
+- deploy consul
+- deploy vault
