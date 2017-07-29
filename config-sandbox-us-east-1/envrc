@@ -1,0 +1,5 @@
+export AWS_ACCESS_KEY_ID=[to use direnv, copy this file to create a new file named .envrc and insert proper access key value here]
+export AWS_SECRET_ACCESS_KEY=[to use direnv, copy this file to create a new file named .envrc and insert proper secret key value here]
+export TF_REMOTE_STATE_BUCKET=mb-sandbox-dev-us-east-1-remote-state-bucket
+export TF_REMOTE_STATE_KEY=$(basename ${PWD})/terraform.tfstate
+export TF_REMOTE_STATE_REGION=us-east-1
