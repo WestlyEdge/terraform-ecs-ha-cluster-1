@@ -1,5 +1,7 @@
 
-# direnv is an environment switcher for the shell... https://direnv.net/
+# direnv is an environment switcher for the shell.
+# It knows how to hook into bash shell to load or unload environment variables depending on the current directory.
+# https://direnv.net/
 
 export AWS_ACCESS_KEY_ID=[you should use direnv... copy this file to create a new file named .envrc and insert aws access key value here]
 export AWS_SECRET_ACCESS_KEY=[you should use direnv... copy this file to create a new file named .envrc and insert aws secret key value here]
