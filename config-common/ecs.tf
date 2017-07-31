@@ -25,8 +25,8 @@ module "ecs" {
 }
 
 resource "aws_key_pair" "ecs" {
-  key_name   = "${var.environment}-${var.cluster_name}-kp"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyezSWhgmnG+FOqORDJUBOG5s9c1farcXK1+Mi5oUwqjd+ysw8YyVozmN0CZaI7dwUiWQRDRYfwFSjcXDsXVyQuEo34IWCmxVeiT/5gQPQTdeoP2umK0T+CSyPQ3SfipAgsGchYTeKf3yKijIw5lQldBALDiZQhJkRPBSPMf5dcLnc0vTUPEYoWjEWDS6Muq4eZqRK5KOSM7QI1WF/PtlGTVeukG6z3nFQ/PTbHz/hI7C3peAsa4OM1z7U9dywV9M3QwXUvj3Ff1qSwmNB9nfzLWjHMXJ22oj7XFVFl/L6QLl7yszNEinY2DfdarZF8bqfTJyTu5grm38IuzCjworr wesedge@Wess-MacBook-Pro-4.local"
+  key_name   = "${var.aws_key_pair_name}"
+  public_key = "${var.aws_key_pair_public_key}"
 }
 
 variable "environment" {}
@@ -37,6 +37,8 @@ variable "min_size" {}
 variable "desired_capacity" {}
 variable "instance_type" {}
 variable "ecs_aws_ami" {}
+variable "aws_key_pair_name" {}
+variable "aws_key_pair_public_key" {}
 
 variable "private_subnet_cidrs" {
   type = "list"
