@@ -1,10 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
-terraform {
-  backend "s3" {}
-}
 
 module "ecs" {
   source = "git@github.com:WestlyEdge/terraform-modules//modules//ecs"
@@ -50,8 +43,4 @@ variable "public_subnet_cidrs" {
 
 variable "availability_zones" {
   type = "list"
-}
-
-output "default_alb_target_group" {
-  value = "${module.ecs.default_alb_target_group}"
 }
