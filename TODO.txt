@@ -1,5 +1,5 @@
 
-- cloudwatch/docker logging?
+
 - cloudwatch monitoring?
 
 - nik's docker terraform apply command?
