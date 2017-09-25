@@ -1,5 +1,8 @@
 
 resource "aws_ecs_service" "consul" {
+
+  depends_on = ["module.ecs"]
+
   name            = "consul"
   cluster         = "${module.ecs.ecs_cluster_arn}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
@@ -27,8 +30,8 @@ resource "aws_ecs_service" "consul" {
 
 resource "aws_ecs_task_definition" "consul" {
   family = "consul"
-  container_definitions = "${file("../task-definitions/consul-service.json")}"
   task_role_arn = "${aws_iam_role.consul.arn}"
+  network_mode = "host"
 
   container_definitions = <<DEFINITION
   [
@@ -36,7 +39,7 @@ resource "aws_ecs_task_definition" "consul" {
           "name": "consul",
           "image": "consul",
           "essential": true,
-          "memory": 1000,
+          "memory": 500,
           "hostname": "consul-host-1",
           "disableNetworking": false,
           "privileged": true,
@@ -47,13 +50,8 @@ resource "aws_ecs_task_definition" "consul" {
               "hostPort": 8500
             }
           ],
-          "entryPoint": [
-              "consul",
-              "agent",
-              "-dev"
-          ],
           "environment" : [
-              { "name" : "testkey", "value" : "testval" }
+              { "name" : "testname", "value" : "testvalue" }
           ]
       }
   ]
@@ -63,6 +61,15 @@ resource "aws_ecs_task_definition" "consul" {
     type = "memberOf"
     expression = "attribute:ecs.availability-zone in [us-east-1a, us-east-1b, us-east-1c]"
   }
+}
+
+resource "aws_security_group_rule" "alb_to_ecs" {
+  type                     = "ingress"
+  from_port                = 8500
+  to_port                  = 8500
+  protocol                 = "TCP"
+  source_security_group_id = "${module.ecs.alb_security_group_id}"
+  security_group_id        = "${module.ecs.ecs_instance_security_group_id}"
 }
 
 resource "aws_iam_role" "consul" {

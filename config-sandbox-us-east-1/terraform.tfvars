@@ -16,9 +16,11 @@ min_size = 3
 
 desired_capacity = 3
 
-instance_type = "t2.micro"
+instance_type = "t2.small"
 
 ecs_aws_ami = "ami-9eb4b1e5"
+
+health_check_path = "/v1/catalog/nodes"
 
 aws_key_pair_name = "sandbox-ecs-ha-cluster-1-kp"
 

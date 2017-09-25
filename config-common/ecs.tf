@@ -15,6 +15,7 @@ module "ecs" {
   key_name              = "${aws_key_pair.ecs.key_name}"
   instance_type         = "${var.instance_type}"
   ecs_aws_ami           = "${var.ecs_aws_ami}"
+  health_check_path     = "${var.health_check_path}"
 }
 
 resource "aws_key_pair" "ecs" {
@@ -32,6 +33,7 @@ variable "instance_type" {}
 variable "ecs_aws_ami" {}
 variable "aws_key_pair_name" {}
 variable "aws_key_pair_public_key" {}
+variable "health_check_path" {}
 
 variable "private_subnet_cidrs" {
   type = "list"
