@@ -45,13 +45,23 @@ resource "aws_ecs_task_definition" "consul" {
           "privileged": true,
           "readonlyRootFilesystem": false,
           "portMappings": [
-            {
-              "containerPort": 8500,
-              "hostPort": 8500
-            }
+            { "containerPort": 8500, "hostPort": 8500 },
+            { "containerPort": 8300, "hostPort": 8300 },
+            { "containerPort": 8301, "hostPort": 8301 }
           ],
           "environment" : [
-              { "name" : "testname", "value" : "testvalue" }
+              { "name" : "testname", "value" : "testvalue" },
+              { "name": "CONSUL_BIND_INTERFACE", "value": "eth0" }
+          ],
+          "command": [
+              "agent",
+              "-server",
+              "-client=0.0.0.0",
+              "-bootstrap-expect=3",
+              "-ui",
+              "-datacenter=dc0",
+              "-retry-join-ec2-tag-key=Cluster",
+              "-retry-join-ec2-tag-value=ecs-ha-cluster-1"
           ]
       }
   ]
@@ -63,12 +73,21 @@ resource "aws_ecs_task_definition" "consul" {
   }
 }
 
-resource "aws_security_group_rule" "alb_to_ecs" {
+resource "aws_security_group_rule" "alb-to-ecs" {
   type                     = "ingress"
   from_port                = 8500
   to_port                  = 8500
   protocol                 = "TCP"
   source_security_group_id = "${module.ecs.alb_security_group_id}"
+  security_group_id        = "${module.ecs.ecs_instance_security_group_id}"
+}
+
+resource "aws_security_group_rule" "consul-to-consul" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 10000
+  protocol                 = "TCP"
+  self                     = true
   security_group_id        = "${module.ecs.ecs_instance_security_group_id}"
 }
 
@@ -96,7 +115,29 @@ resource "aws_iam_role" "consul" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ec2-admin-access-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "ec2-service-role-access-policy-attachment" {
   role = "${aws_iam_role.consul.name}"
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
+}
+
+resource "aws_iam_policy" "describe-instances" {
+  name = "describe-instances"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ec2:DescribeInstances",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "ecs-decribe-instances" {
+  role = "${module.ecs.ecs_instance_role_name}"
+  policy_arn = "${aws_iam_policy.describe-instances.arn}"
 }
