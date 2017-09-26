@@ -44,10 +44,9 @@ resource "aws_ecs_task_definition" "consul" {
           "privileged": true,
           "readonlyRootFilesystem": false,
           "portMappings": [
-            { "containerPort": 8600, "hostPort": 8600 },
-            { "containerPort": 8500, "hostPort": 8500 },
             { "containerPort": 8300, "hostPort": 8300 },
-            { "containerPort": 8301, "hostPort": 8301 }
+            { "containerPort": 8301, "hostPort": 8301 },
+            { "containerPort": 8500, "hostPort": 8500 }
           ],
           "environment" : [
               { "name" : "testname", "value" : "testvalue" },
@@ -92,8 +91,8 @@ resource "aws_security_group_rule" "alb-to-ecs" {
 
 resource "aws_security_group_rule" "consul-to-consul" {
   type                     = "ingress"
-  from_port                = 0
-  to_port                  = 10000
+  from_port                = 8300
+  to_port                  = 8301
   protocol                 = "TCP"
   self                     = true
   security_group_id        = "${module.ecs.ecs_instance_security_group_id}"
