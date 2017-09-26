@@ -40,18 +40,18 @@ resource "aws_ecs_task_definition" "consul" {
           "image": "consul",
           "essential": true,
           "memory": 500,
-          "hostname": "consul-host-1",
           "disableNetworking": false,
           "privileged": true,
           "readonlyRootFilesystem": false,
           "portMappings": [
+            { "containerPort": 8600, "hostPort": 8600 },
             { "containerPort": 8500, "hostPort": 8500 },
             { "containerPort": 8300, "hostPort": 8300 },
             { "containerPort": 8301, "hostPort": 8301 }
           ],
           "environment" : [
               { "name" : "testname", "value" : "testvalue" },
-              { "name": "CONSUL_BIND_INTERFACE", "value": "eth0" }
+              { "name" : "CONSUL_BIND_INTERFACE", "value" : "eth0" }
           ],
           "command": [
               "agent",
@@ -61,8 +61,16 @@ resource "aws_ecs_task_definition" "consul" {
               "-ui",
               "-datacenter=dc0",
               "-retry-join-ec2-tag-key=Cluster",
-              "-retry-join-ec2-tag-value=ecs-ha-cluster-1"
-          ]
+              "-retry-join-ec2-tag-value=${var.cluster_name}"
+          ],
+          "logConfiguration": {
+              "logDriver": "awslogs",
+              "options": {
+                  "awslogs-group": "${var.cluster_name}/consul",
+                  "awslogs-region": "us-east-1",
+                  "awslogs-stream-prefix": "${var.cluster_name}"
+              }
+          }
       }
   ]
   DEFINITION
@@ -140,4 +148,9 @@ EOF
 resource "aws_iam_role_policy_attachment" "ecs-decribe-instances" {
   role = "${module.ecs.ecs_instance_role_name}"
   policy_arn = "${aws_iam_policy.describe-instances.arn}"
+}
+
+resource "aws_cloudwatch_log_group" "consul" {
+  name              = "${var.cluster_name}/consul"
+  retention_in_days = 30
 }
