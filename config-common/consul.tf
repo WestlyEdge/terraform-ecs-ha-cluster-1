@@ -1,4 +1,16 @@
 
+module "alb_consul" {
+  source = "git@github.com:WestlyEdge/terraform-modules//modules//alb"
+
+  alb_name          = "alb-consul"
+  port              = 80
+  protocol          = "HTTP"
+  environment       = "${var.environment}"
+  vpc_id            = "${module.ecs.network_vpc_id}"
+  public_subnet_ids = "${module.ecs.network_public_subnet_ids}"
+  health_check_path = "/v1/catalog/nodes"
+}
+
 resource "aws_ecs_service" "consul" {
 
   depends_on = ["module.ecs"]
@@ -11,7 +23,7 @@ resource "aws_ecs_service" "consul" {
 
   load_balancer   = [
     {
-      target_group_arn = "${module.ecs.alb_target_group}",
+      target_group_arn = "${module.alb_consul.alb_target_group}",
       container_name = "consul",
       container_port = 8500
     }
@@ -80,12 +92,12 @@ resource "aws_ecs_task_definition" "consul" {
   }
 }
 
-resource "aws_security_group_rule" "alb-to-ecs" {
+resource "aws_security_group_rule" "alb-consul-to-ecs-instance" {
   type                     = "ingress"
   from_port                = 8500
   to_port                  = 8500
   protocol                 = "TCP"
-  source_security_group_id = "${module.ecs.alb_security_group_id}"
+  source_security_group_id = "${module.alb_consul.alb_security_group_id}"
   security_group_id        = "${module.ecs.ecs_instance_security_group_id}"
 }
 
@@ -122,12 +134,12 @@ resource "aws_iam_role" "consul" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ec2-service-role-access-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "consul-container-service-role-attachment" {
   role = "${aws_iam_role.consul.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
 
-resource "aws_iam_policy" "describe-instances" {
+resource "aws_iam_policy" "consul-describe-instances-policy" {
   name = "describe-instances"
 
   policy = <<EOF
@@ -144,9 +156,9 @@ resource "aws_iam_policy" "describe-instances" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ecs-decribe-instances" {
+resource "aws_iam_role_policy_attachment" "consul-ecs-decribe-instances-pa" {
   role = "${module.ecs.ecs_instance_role_name}"
-  policy_arn = "${aws_iam_policy.describe-instances.arn}"
+  policy_arn = "${aws_iam_policy.consul-describe-instances-policy.arn}"
 }
 
 resource "aws_cloudwatch_log_group" "consul" {
