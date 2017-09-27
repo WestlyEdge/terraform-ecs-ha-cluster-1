@@ -9,7 +9,7 @@ module "alb-vault" {
   environment       = "${var.environment}"
   vpc_id            = "${module.ecs.network_vpc_id}"
   public_subnet_ids = "${module.ecs.network_public_subnet_ids}"
-  health_check_path = "/v1/catalog/nodes"
+  health_check_path = "/v1/sys/health"
 }
 
 resource "aws_ecs_service" "vault" {
@@ -57,12 +57,17 @@ resource "aws_ecs_task_definition" "vault" {
           "privileged": true,
           "readonlyRootFilesystem": false,
           "portMappings": [
-            { "containerPort": 8200, "hostPort": 8200 }
+            { "containerPort": 8200, "hostPort": 8200 },
+            { "containerPort": 8201, "hostPort": 8201 }
           ],
           "environment" : [
-              { "name" : "testname", "value" : "testvalue" }
+              { "name" : "VAULT_ADDR", "value" : "http://0.0.0.0:8200" },
+              { "name" : "SKIP_SETCAP", "value" : "false" },
+              { "name" : "VAULT_LOCAL_CONFIG", "value" : "{\"listener\": [{\"tcp\": {\"address\": \"127.0.0.1:8200\"}}], \"storage\": {\"file\": {\"path\": \"/vault/file\"}}, \"default_lease_ttl\": \"168h\", \"max_lease_ttl\": \"720h\"}, \"disable_mlock\": \"true\""}
           ],
-          "command": [],
+          "command": [
+
+          ],
           "logConfiguration": {
               "logDriver": "awslogs",
               "options": {
@@ -121,15 +126,15 @@ resource "aws_security_group_rule" "alb-vault-to-ecs-instance" {
 
 resource "aws_security_group_rule" "vault-to-vault" {
   type                     = "ingress"
-  from_port                = 8300
-  to_port                  = 8301
+  from_port                = 8201
+  to_port                  = 8201
   protocol                 = "TCP"
   self                     = true
   security_group_id        = "${module.ecs.ecs_instance_security_group_id}"
 }
 
 resource "aws_iam_policy" "vault-describe-instances-policy" {
-  name = "describe-instances"
+  name = "vault-describe-instances-policy"
 
   policy = <<EOF
 {

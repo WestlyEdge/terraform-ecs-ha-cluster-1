@@ -140,7 +140,7 @@ resource "aws_iam_role_policy_attachment" "consul-container-service-role-attachm
 }
 
 resource "aws_iam_policy" "consul-describe-instances-policy" {
-  name = "describe-instances"
+  name = "consul-describe-instances-policy"
 
   policy = <<EOF
 {
