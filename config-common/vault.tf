@@ -9,7 +9,7 @@ module "alb-vault" {
   environment       = "${var.environment}"
   vpc_id            = "${module.ecs.network_vpc_id}"
   public_subnet_ids = "${module.ecs.network_public_subnet_ids}"
-  health_check_path = "/v1/sys/health"
+  health_check_path = "/v1/sys/init"
 }
 
 resource "aws_ecs_service" "vault" {
@@ -61,12 +61,11 @@ resource "aws_ecs_task_definition" "vault" {
             { "containerPort": 8201, "hostPort": 8201 }
           ],
           "environment" : [
-              { "name" : "VAULT_ADDR", "value" : "http://0.0.0.0:8200" },
-              { "name" : "SKIP_SETCAP", "value" : "false" },
-              { "name" : "VAULT_LOCAL_CONFIG", "value" : "{\"listener\": [{\"tcp\": {\"address\": \"127.0.0.1:8200\"}}], \"storage\": {\"file\": {\"path\": \"/vault/file\"}}, \"default_lease_ttl\": \"168h\", \"max_lease_ttl\": \"720h\"}, \"disable_mlock\": \"true\""}
+              { "name" : "VAULT_ADDR", "value" : "http://127.0.0.1:8200" },
+              { "name" : "VAULT_LOCAL_CONFIG", "value" : "{\"listener\": [{\"tcp\": {\"address\": \"0.0.0.0:8200\", \"tls_disable\": 1}}], \"storage\": {\"consul\": {\"address\": \"127.0.0.1:8500\", \"path\": \"vault\"}}, \"default_lease_ttl\": \"168h\", \"max_lease_ttl\": \"720h\"}"}
           ],
           "command": [
-
+            "server"
           ],
           "logConfiguration": {
               "logDriver": "awslogs",
