@@ -1,5 +1,5 @@
 
-module "alb-vault" {
+module "alb_vault" {
 
   source = "git@github.com:WestlyEdge/terraform-modules//modules//alb"
 
@@ -24,7 +24,7 @@ resource "aws_ecs_service" "vault" {
 
   load_balancer   = [
     {
-      target_group_arn = "${module.alb-vault.alb_target_group}",
+      target_group_arn = "${module.alb_vault.alb_target_group}",
       container_name = "vault",
       container_port = 8200
     }
@@ -119,7 +119,7 @@ resource "aws_security_group_rule" "alb-vault-to-ecs-instance" {
   from_port                = 8200
   to_port                  = 8200
   protocol                 = "TCP"
-  source_security_group_id = "${module.alb-vault.alb_security_group_id}"
+  source_security_group_id = "${module.alb_vault.alb_security_group_id}"
   security_group_id        = "${module.ecs.ecs_instance_security_group_id}"
 }
 
@@ -157,4 +157,8 @@ resource "aws_iam_role_policy_attachment" "vault-ecs-decribe-instances-pa" {
 resource "aws_cloudwatch_log_group" "vault" {
   name              = "${var.cluster_name}/vault"
   retention_in_days = 30
+}
+
+output "vault_alb_dns_name" {
+  value = "${module.alb_vault.alb_dns_name}}"
 }

@@ -165,3 +165,7 @@ resource "aws_cloudwatch_log_group" "consul" {
   name              = "${var.cluster_name}/consul"
   retention_in_days = 30
 }
+
+output "consul_alb_dns_name" {
+  value = "${module.alb_consul.alb_dns_name}}"
+}
