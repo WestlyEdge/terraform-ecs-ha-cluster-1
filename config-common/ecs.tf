@@ -18,6 +18,14 @@ module "ecs" {
   health_check_path     = "${var.health_check_path}"
 }
 
+module "ecs_debug_mode" {
+  source = "git@github.com:WestlyEdge/terraform-modules//modules//ecs_debug_mode"
+
+  cluster_name              = "${var.cluster_name}"
+  security_group_id         = "${module.ecs.ecs_instance_security_group_id}"
+  vpc_internet_gateway_id   = "${module.ecs.vpc_internet_gateway_id}"
+}
+
 resource "aws_key_pair" "ecs" {
   key_name   = "${var.aws_key_pair_name}"
   public_key = "${var.aws_key_pair_public_key}"
@@ -45,4 +53,16 @@ variable "public_subnet_cidrs" {
 
 variable "availability_zones" {
   type = "list"
+}
+
+output "cluster_name" {
+  value = "${var.cluster_name}"
+}
+
+output "ecs_instance_security_group_id" {
+  value = "${module.ecs.ecs_instance_security_group_id}"
+}
+
+output "vpc_internet_gateway_id" {
+  value = "${module.ecs.vpc_internet_gateway_id}"
 }
