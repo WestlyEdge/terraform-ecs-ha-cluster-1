@@ -1,8 +1,0 @@
-
-
-- cloudwatch monitoring?
-
-- nik's docker terraform apply command?
-- deploy consul
-- deploy vault
-- redraw images?
