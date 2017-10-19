@@ -49,7 +49,7 @@ resource "aws_ecs_task_definition" "consul" {
   [
       {
           "name": "consul",
-          "image": "consul",
+          "image": "consul:0.9.3",
           "essential": true,
           "memory": 500,
           "disableNetworking": false,
@@ -61,7 +61,6 @@ resource "aws_ecs_task_definition" "consul" {
             { "containerPort": 8500, "hostPort": 8500 }
           ],
           "environment" : [
-              { "name" : "testname", "value" : "testvalue" },
               { "name" : "CONSUL_BIND_INTERFACE", "value" : "eth0" }
           ],
           "command": [
@@ -167,5 +166,5 @@ resource "aws_cloudwatch_log_group" "consul" {
 }
 
 output "consul_alb_dns_name" {
-  value = "${module.alb_consul.alb_dns_name}}"
+  value = "${module.alb_consul.alb_dns_name}"
 }
