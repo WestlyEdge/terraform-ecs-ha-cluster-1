@@ -50,11 +50,3 @@ variable "availability_zones" {
 output "cluster_name" {
   value = "${var.cluster_name}"
 }
-
-output "ecs_instance_security_group_id" {
-  value = "${module.ecs.ecs_instance_security_group_id}"
-}
-
-output "vpc_internet_gateway_id" {
-  value = "${module.ecs.vpc_internet_gateway_id}"
-}
