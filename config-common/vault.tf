@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "vault" {
   [
       {
           "name": "vault",
-          "image": "vault",
+          "image": "vault:0.8.3",
           "essential": true,
           "memory": 500,
           "disableNetworking": false,
