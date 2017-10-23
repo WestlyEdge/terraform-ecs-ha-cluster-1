@@ -41,9 +41,14 @@ resource "aws_ecs_service" "consul" {
 }
 
 resource "aws_ecs_task_definition" "consul" {
-  family = "consul"
+  family        = "consul"
   task_role_arn = "${aws_iam_role.consul.arn}"
-  network_mode = "host"
+  network_mode  = "host"
+
+  volume {
+    name      = "consul-data"
+    host_path = "/consul-data"
+  }
 
   container_definitions = <<DEFINITION
   [
@@ -80,7 +85,14 @@ resource "aws_ecs_task_definition" "consul" {
                   "awslogs-region": "us-east-1",
                   "awslogs-stream-prefix": "${var.cluster_name}"
               }
-          }
+          },
+          "mountPoints": [
+              {
+                  "sourceVolume": "consul-data",
+                  "containerPath": "/consul/data"
+              }
+          ]
+
       }
   ]
   DEFINITION
