@@ -23,16 +23,31 @@ Apply this terraform project to create a self contained, highly available, produ
 
 ## Project Architecture
 
-The project layout is designed in such a way that we can easily manage this infrastructure within many different aws accounts.
+The project layout is designed in such a way that we can create/manage this infrastructure within many different aws accounts.
 - the */config-common/* directory contains the .tf files to create the infrastructure, but we'll never apply terraform directly against the files in this directory
 - */config-sandbox-us-east-1/* is an environment specific directory, it contains symlinks to the tf files that exist within */config-common/*
 - environment specific directories contain *terraform.tfvars*, this is where you specify the environment specific input params
 - create more environment specific directories as needed
 - [direnv](https://direnv.net/) is used to supply the correct aws creds, direnv is an environment switcher for the shell, check out [config-sandbox-us-east-1/envrc](config-sandbox-us-east-1/envrc) for instructions
 
-## Terraform Init?
+## How to initialize a new environment directory?
 
+If you are adding a new environment directory, you'll need to initialize terraform from within the new directory. To accomplish this
+you should run the */init-remote-state.sh* from within the directory e.g...
 
+```bash
+# cd into the environment specific directory
+cd config-sandbox-us-east-1
+
+# initialize terraform, set remote state s3 bucket location
+../init-remote-state.sh
+```
+
+The */init-remote-state.sh* script sets the remote state bucket location. This bucket path is convention based... 
+
+*mb-{current dir name}-remote-state-bucket* = *mb-config-sandbox-us-east-1-remote-state-bucket*
+  
+The s3 bucket must exist before you run this script.
 
 ## How to create it?
 
