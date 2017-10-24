@@ -43,13 +43,10 @@ cd config-sandbox-us-east-1
 ../init-remote-state.sh
 ```
 
-The */init-remote-state.sh* script sets the remote state bucket location. This bucket path is convention based... 
-
-*mb-{current dir name}-remote-state-bucket* = *mb-config-sandbox-us-east-1-remote-state-bucket*
-  
-The s3 bucket must exist before you run this script.
-
-For more specific details, look here [*/init-remote-state.sh*](/init-remote-state.sh)
+- The */init-remote-state.sh* script sets the remote state bucket location. This bucket path is convention based... 
+- *mb-{current dir name}-remote-state-bucket* = *mb-config-sandbox-us-east-1-remote-state-bucket*
+- The s3 bucket must exist before you run this script.
+- For more specific details, look here [*/init-remote-state.sh*](/init-remote-state.sh)
 
 ## How to create the infrastructure?
 
@@ -71,3 +68,12 @@ terraform plan
 # create the infrastructure
 terraform apply
 ```
+
+## EC2 ssh access (key pair)
+
+- To facilitate 100% self contained infra as code, we are supplying a pre-defined ssh key pair to the ecs terraform module
+- notice the *key_pair_name* and *key_pair_public_key* values @ [*/config-sandbox-us-east-1/terraform.tfvars*](/config-sandbox-us-east-1/terraform.tfvars)
+- If you need ssh access to the ecs instances, you will need the private key file, you'll find it in the *"mb-key-pairs"* s3 bucket,
+keeping this bucket up to date is a manual act
+- naming convention for the ssh private key file is... *"{environment}-{ecs-cluster-name}-kp.pem"* = *"sandbox-ecs-ha-cluster-1-kp.pem"* 
+ 
