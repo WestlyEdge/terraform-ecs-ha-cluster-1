@@ -2,7 +2,11 @@
 
 Apply this terraform project to create a self contained, highly available, production-ready ECS host cluster.
 - with ha Consul
+    - view Consul logs at Cloudwatch log group */ecs-ha-cluster-1/consul*
+    - *terraform apply* will output the alb dns name 
 - with ha Vault
+    - view Vault logs at Cloudwatch log group */ecs-ha-cluster-1/vault*
+    - *terraform apply* will output the alb dns name
 
 ![ECS infra](img/ecs-infra.png)
 
@@ -24,7 +28,6 @@ The project layout is designed in such a way that we can easily manage this infr
 - */config-sandbox-us-east-1/* is an environment specific directory, it contains symlinks to the tf files that exist within */config-common/*
 - environment specific directories contain *terraform.tfvars*, this is where you specify the environment specific input params
 - create more environment specific directories as needed
-
 - [direnv](https://direnv.net/) is used to supply the correct aws creds, direnv is an environment switcher for the shell, check out [config-sandbox-us-east-1/envrc](config-sandbox-us-east-1/envrc) for instructions
 
 using the default terraform flow:
