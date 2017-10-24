@@ -49,6 +49,8 @@ The */init-remote-state.sh* script sets the remote state bucket location. This b
   
 The s3 bucket must exist before you run this script.
 
+For more specific details, look here [*/init-remote-state.sh*](/init-remote-state.sh)
+
 ## How to create it?
 
 using the default terraform flow:
