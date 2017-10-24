@@ -26,6 +26,19 @@ module "ecs" {
   health_check_path     = "${var.health_check_path}"
 }
 
+module "consul" {
+  source = "git@github.com:WestlyEdge/terraform-modules//modules//ecs_services//consul"
+
+  environment                     = "${var.environment}"
+  cluster_name                    = "${var.cluster_name}"
+  desired_capacity                = "${var.desired_capacity}"
+  ecs_cluster_arn                 = "${module.ecs.ecs_cluster_arn}"
+  vpc_id                          = "${module.ecs.network_vpc_id}"
+  ecs_instance_security_group_id  = "${module.ecs.ecs_instance_security_group_id}"
+  ecs_instance_role_name          = "${module.ecs.ecs_instance_role_name}"
+  public_subnet_ids               = "${module.ecs.network_public_subnet_ids}"
+}
+
 module "vault" {
   source = "git@github.com:WestlyEdge/terraform-modules//modules//ecs_services//vault"
 
