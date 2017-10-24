@@ -23,7 +23,6 @@ module "ecs" {
   key_pair_public_key   = "${var.key_pair_public_key}"
   instance_type         = "${var.instance_type}"
   ecs_aws_ami           = "${var.ecs_aws_ami}"
-  health_check_path     = "${var.health_check_path}"
 }
 
 module "consul" {
