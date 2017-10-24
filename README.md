@@ -1,16 +1,12 @@
 # terraform-ecs-ha-cluster-1
 
-- developed and tested with Terraform v0.10.4
+Developed and tested with Terraform v0.10.4
 
-- installs a self contained, highly available, production-ready ECS host cluster
+Installs a self contained, highly available, production-ready ECS host cluster
 
-- installs Consul as an ECS service
-    - view Consul logs at Cloudwatch log group */ecs-ha-cluster-1/consul*
-    - *terraform apply* will output the alb dns name 
+Installs Consul as an ECS service
 
-- installs Vault as an ECS service
-    - view Vault logs at Cloudwatch log group */ecs-ha-cluster-1/vault*
-    - *terraform apply* will output the alb dns name
+Installs Vault as an ECS service
 
 ![ECS infra](img/ecs-infra.png)
 
