@@ -26,7 +26,7 @@ Apply this terraform project to create a self contained, highly available, produ
 The project is designed in such a way that we can create/manage this infrastructure within many different aws accounts.
 - the */config-common/* directory contains the .tf files that actually create the infrastructure, but we'll never apply terraform directly against the files in this directory
 - */config-sandbox-us-east-1/* is an environment specific directory, it contains symlinks to the tf files that exist within */config-common/*
-- environment specific directories contain *terraform.tfvars*, this is where you specify the environment specific input params
+- environment specific directories contain *terraform.tfvars*, this is where you specify the environment specific input variable values
 - create more environment specific directories as needed
 - [direnv](https://direnv.net/) is used to supply the correct aws creds, direnv is an environment switcher for the shell, check out [*/config-sandbox-us-east-1/envrc*](config-sandbox-us-east-1/envrc) for instructions
 
