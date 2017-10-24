@@ -56,7 +56,7 @@ resource "aws_ecs_task_definition" "consul" {
           "name": "consul",
           "image": "consul:0.9.3",
           "essential": true,
-          "memory": 500,
+          "memory": 3000,
           "disableNetworking": false,
           "privileged": true,
           "readonlyRootFilesystem": false,
