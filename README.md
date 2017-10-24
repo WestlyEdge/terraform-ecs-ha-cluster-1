@@ -19,16 +19,19 @@ Apply this terraform project to create a self contained, highly available, produ
 
 ## How to create it?
 
-To create a working ECS cluster from this repository see **main.tf** and **terraform.tfvars**.
+The project layout is designed in such a way that we can easily manage this infrastructure within many different aws accounts.
+- the "config-common" directory contains the .tf files to create the infrastructure, but we'll never apply terraform directly against the files in this directory
+- the "config-sandbox-us-east-1" directory contains symlinks to the tf files that exist within "config-common", this is where we will run "terraform apply"
+- [direnv](https://direnv.net/) is used to supply the correct aws creds, direnv is an environment switcher for the shell, check out [config-sandbox-us-east-1/envrc](config-sandbox-us-east-1/envrc) for instructions
 
 using the default terraform flow:
 
 ```bash
+cd config-sandbox-us-east-1
 terraform get -update=true
 terraform plan
 terraform apply
 ```
-
 
 ## ECS configuration
 
