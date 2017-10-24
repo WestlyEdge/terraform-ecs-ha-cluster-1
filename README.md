@@ -73,4 +73,8 @@ terraform apply
 - If you need ssh access to the ecs instances, you will need the ssh private key file, you'll find it in the *"mb-key-pairs"* s3 bucket,
 keeping this bucket up to date is a manual act
 - naming convention for the ssh private key file is... *"{environment}-{ecs-cluster-name}-kp.pem"* = *"sandbox-ecs-ha-cluster-1-kp.pem"* 
- 
+
+## ECS Logs
+
+- All ECS instance logs are shipped out to a CloudWatch log group
+- ECS service specific logs (such as Consul and Vault) are shipped out to a CloudWatch log group
