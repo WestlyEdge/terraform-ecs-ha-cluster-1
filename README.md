@@ -8,6 +8,8 @@ Apply this terraform project to create a self contained, highly available, produ
     - view Vault logs at Cloudwatch log group */ecs-ha-cluster-1/vault*
     - *terraform apply* will output the alb dns name
 
+- developed and tested with Terraform v0.10.4
+
 ![ECS infra](img/ecs-infra.png)
 
 ## What are we creating?
