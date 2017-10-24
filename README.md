@@ -1,8 +1,8 @@
 # terraform-ecs-ha-cluster-1
 
-Apply this terraform project to create a self contained, highly available, production-ready ECS host cluster...
-
 - developed and tested with Terraform v0.10.4
+
+- installs a self contained, highly available, production-ready ECS host cluster
 
 - installs Consul as an ECS service
     - view Consul logs at Cloudwatch log group */ecs-ha-cluster-1/consul*
