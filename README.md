@@ -43,7 +43,7 @@ cd config-sandbox-us-east-1
 ../init-remote-state.sh
 ```
 
-- The */init-remote-state.sh* script sets the remote state bucket location. This bucket path is convention based... 
+- The [*/init-remote-state.sh*](/init-remote-state.sh) script sets the remote state bucket location. This bucket path is convention based... 
 *mb-{current dir name}-remote-state-bucket* = *mb-config-sandbox-us-east-1-remote-state-bucket*
 - The s3 bucket must exist before you run this script.
 - For more specific details, look here [*/init-remote-state.sh*](/init-remote-state.sh)
