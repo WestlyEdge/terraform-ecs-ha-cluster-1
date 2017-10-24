@@ -39,12 +39,18 @@ The project layout is designed in such a way that we can easily manage this infr
 using the default terraform flow:
 
 ```bash
+# cd into the environment specific directory
 cd config-sandbox-us-east-1
 
 #check that you are targeting the desired aws account
 aws iam list-account-aliases 
 
+# download module dependencies
 terraform get -update=true
+
+# check the plan
 terraform plan
+
+# create the infrastructure
 terraform apply
 ```
