@@ -1,12 +1,9 @@
 # terraform-ecs-ha-cluster-1
 
-Developed and tested with Terraform v0.10.4
-
-Installs a self contained, highly available, production-ready ECS host cluster
-
-Installs Consul as an ECS service
-
-Installs Vault as an ECS service
+- Developed and tested with Terraform v0.10.4
+- Installs a self contained, highly available, production-ready ECS host cluster
+- Installs Consul as an ECS service
+- Installs Vault as an ECS service
 
 ![ECS infra](img/ecs-infra.png)
 
