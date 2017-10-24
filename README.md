@@ -1,14 +1,16 @@
 # terraform-ecs-ha-cluster-1
 
 Apply this terraform project to create a self contained, highly available, production-ready ECS host cluster...
-- with ha Consul
-    - view Consul logs at Cloudwatch log group */ecs-ha-cluster-1/consul*
-    - *terraform apply* will output the alb dns name 
-- with ha Vault
-    - view Vault logs at Cloudwatch log group */ecs-ha-cluster-1/vault*
-    - *terraform apply* will output the alb dns name
 
 - developed and tested with Terraform v0.10.4
+
+- installs Consul as an ECS service
+    - view Consul logs at Cloudwatch log group */ecs-ha-cluster-1/consul*
+    - *terraform apply* will output the alb dns name 
+
+- installs Vault as an ECS service
+    - view Vault logs at Cloudwatch log group */ecs-ha-cluster-1/vault*
+    - *terraform apply* will output the alb dns name
 
 ![ECS infra](img/ecs-infra.png)
 
