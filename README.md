@@ -1,6 +1,8 @@
 # terraform-ecs-ha-cluster-1
 
-Applying ecs.tf will create a self contained, highly available, production-ready ECS host cluster.
+Apply this terraform project to create a self contained, highly available, production-ready ECS host cluster.
+- with ha Consul
+- with ha Vault
 
 ![ECS infra](img/ecs-infra.png)
 
@@ -17,14 +19,14 @@ Applying ecs.tf will create a self contained, highly available, production-ready
 
 ## How to create it?
 
-To create a working ECS cluster from this repository see **ecs.tf** and **ecs.tfvars**.
+To create a working ECS cluster from this repository see **main.tf** and **terraform.tfvars**.
 
 using the default terraform flow:
 
 ```bash
-terraform get
-terraform plan -input=false -var-file=ecs.tfvars
-terraform apply -input=false -var-file=ecs.tfvars
+terraform get -update=true
+terraform plan
+terraform apply
 ```
 
 
@@ -34,7 +36,7 @@ ECS is configured using the */etc/ecs/ecs.config* file as you can see [here](htt
 
 ## LoadBalancer
 
-It is possible to use the Application LoadBalancer and the Classic LoadBalancer with this setup. The default configuration is Application LoadBalancer because that makes more sense in combination with ECS. There is also a concept of [Internal and External facing LoadBalancer](deployment/README.md#internal-vs-external)
+It is possible to use the Application LoadBalancer and the Classic LoadBalancer with this setup. The default configuration is Application LoadBalancer because that makes more sense in combination with ECS.
 
 ## ECS deployment strategies
 
@@ -57,7 +59,3 @@ The best option is to drain the containers from an ECS instance like described [
 ## ECS detect deployments failure
 
 When deploying manually we can see if the new container has started or is stuck in a start/stop loop. But when deploying automatically this is not visible. To make sure we get alerted when containers start failing we need to watch for events from ECS who state that a container has STOPPED. This can be done by using the module [ecs_events](modules/ecs_events/main.tf). The only thing that is missing from the module is the actual alert. This is because terraform can't handle email and all other protocols for *aws_sns_topic_subscription* are specific per customer.
-
-## keypair
-
-s3 bucket "mb-key-pairs"
