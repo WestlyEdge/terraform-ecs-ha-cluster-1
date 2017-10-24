@@ -33,7 +33,7 @@ The project layout is designed in such a way that we can create/manage this infr
 ## How to initialize a new environment directory?
 
 If you are adding a new environment directory, you'll need to initialize terraform from within the new directory. To accomplish this
-you should run the */init-remote-state.sh* from within the directory e.g...
+you should run */init-remote-state.sh* from within the directory e.g...
 
 ```bash
 # cd into the environment specific directory
