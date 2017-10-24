@@ -32,7 +32,7 @@ The project is designed in such a way that we can create/manage this infrastruct
 
 ## How to initialize a new environment directory?
 
-If you are adding a new environment directory, you'll need to initialize terraform from within the new directory. To accomplish this
+If you are adding a new environment directory, or if you are running this from a fresh install, you'll need to initialize terraform from within the environment specific directory. To accomplish this
 you should run [*/init-remote-state.sh*](/init-remote-state.sh) from within the directory e.g...
 
 ```bash
@@ -51,7 +51,7 @@ The s3 bucket must exist before you run this script.
 
 For more specific details, look here [*/init-remote-state.sh*](/init-remote-state.sh)
 
-## How to create it?
+## How to create the infrastructure?
 
 using the default terraform flow:
 
