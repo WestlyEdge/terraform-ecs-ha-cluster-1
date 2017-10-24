@@ -1,6 +1,6 @@
 # terraform-ecs-ha-cluster-1
 
-Apply this terraform project to create a self contained, highly available, production-ready ECS host cluster.
+Apply this terraform project to create a self contained, highly available, production-ready ECS host cluster...
 - with ha Consul
     - view Consul logs at Cloudwatch log group */ecs-ha-cluster-1/consul*
     - *terraform apply* will output the alb dns name 
