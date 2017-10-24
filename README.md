@@ -28,12 +28,12 @@ The project layout is designed in such a way that we can create/manage this infr
 - */config-sandbox-us-east-1/* is an environment specific directory, it contains symlinks to the tf files that exist within */config-common/*
 - environment specific directories contain *terraform.tfvars*, this is where you specify the environment specific input params
 - create more environment specific directories as needed
-- [direnv](https://direnv.net/) is used to supply the correct aws creds, direnv is an environment switcher for the shell, check out [config-sandbox-us-east-1/envrc](config-sandbox-us-east-1/envrc) for instructions
+- [direnv](https://direnv.net/) is used to supply the correct aws creds, direnv is an environment switcher for the shell, check out [*/config-sandbox-us-east-1/envrc*](config-sandbox-us-east-1/envrc) for instructions
 
 ## How to initialize a new environment directory?
 
 If you are adding a new environment directory, you'll need to initialize terraform from within the new directory. To accomplish this
-you should run */init-remote-state.sh* from within the directory e.g...
+you should run [*/init-remote-state.sh*](/init-remote-state.sh) from within the directory e.g...
 
 ```bash
 # cd into the environment specific directory
